@@ -11,4 +11,5 @@ class Subscribe:
 
     def stop(com_obj):
         com_obj.Unsubscribe()
+        print(f"Subscribe 종료")
 

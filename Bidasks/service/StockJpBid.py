@@ -21,9 +21,9 @@ class BidAskEvent:
         timestamp = TimeStamp.hhmm_timestamp(time)  # 시간 형식 변환
 
         result_list = [code, volume, bid, ask, timestamp]
-        # BidAskModels.insert(result_list)
-        filesys.insert_file(result_list)
-        print(result_list, threading.currentThread().getName())  # 콘솔 확인용
+        # filesys.insert_file(result_list) # csv에 바로 입력할 경우
+        filesys.memory_data(result_list) # 메모리에 입력할 경우
+        print(result_list)  # 콘솔 확인용
 
 
 class BidAsk:
@@ -33,24 +33,11 @@ class BidAsk:
     def unsubscribe():
         Subscribe.stop(bidask_obj)
 
-    def get_bidasks(is_bulk, code):
-        if is_bulk:
-            return jsonify(BidAskModels.select_bulk(code)), 200
-        return jsonify(BidAskModels.select_one(code)), 20
+    def get_bidasks(code, bulk_cnt):
+        if not bulk_cnt:
+            return jsonify('Invalid Value'), 400
+        return jsonify(filesys.select_bulk(code, bulk_cnt)), 200
 
-
+# 수정 예정
 bidask_obj = win32com.client.Dispatch("DsCbo1.StockJpBid")
 bidask_event_obj = win32com.client.WithEvents(bidask_obj, BidAskEvent)
-
-
-
-            # 모델로 가서 파일에 있는 값 불러오기
-            # 값이 100개 보다 얼마나 모자른지 확인,
-            # 모델로 가서 모자른 수 만큼 디비 최신 값 불러오기
-            # 최종적으로 100개의 데이터를 제이슨으로 리턴하기
-
-
-            # 모델로 가서 파일에 있는 값 불러오기
-            # 파일에 값이 한 개도 없다면,
-            # 모델로 가서 디비 최신 값 1개 불러오기
-            # 최종적으로 1개의 데이터를 제이슨으로 리턴하기

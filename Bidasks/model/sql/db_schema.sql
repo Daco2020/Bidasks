@@ -13,8 +13,8 @@ CREATE TABLE bidasks(
     id         INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
     code       VARCHAR(10) NOT NULL,
     volume     INT NOT NULL,
-    bid        DECIMAL(18, 2) NOT NULL,
-    ask        DECIMAL(18, 2) NOT NULL,
+    bid        INT NOT NULL,
+    ask        INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )CHARSET=utf8;
 

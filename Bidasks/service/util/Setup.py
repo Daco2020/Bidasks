@@ -3,7 +3,6 @@ from service.util import CodeHandler
 
 
 def start_subscribe(object):
-    print(threading.currentThread().getName())
     pythoncom.CoInitialize()
     codes = CodeHandler.select_codes()
     objects = []
