@@ -19,11 +19,11 @@ class CodeModels():
         sql = "INSERT IGNORE INTO codes (code) VALUES (%s)"
         db_class.execute(sql, code)
         db_class.commit()
-        return 1
+        return True
 
     def delete(code):
         db_class = Connector()
         sql = "DELETE FROM codes WHERE code=(%s)"
         db_class.execute(sql, code)
         db_class.commit()
-        return 1
+        return True

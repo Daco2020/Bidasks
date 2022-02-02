@@ -4,16 +4,16 @@ from flask import jsonify
 
 def insert_code(code):
     if CodeModels.select_one(code):
-        return 0
+        raise ValueError
     CodeModels.insert(code)
-    return 1
+    return True
 
 
 def delete_code(code):
     if not CodeModels.select_one(code):
-        return 0
+        raise ValueError
     CodeModels.delete(code)
-    return 1
+    return True
 
 
 def select_codes():
