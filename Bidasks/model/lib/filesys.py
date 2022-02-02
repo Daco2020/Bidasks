@@ -1,10 +1,5 @@
-from os import linesep
-import sys
-import time
 import csv
 
-from black import os
-from flask import jsonify
 from model.BidAsk import BidAskModels
 
 
@@ -17,9 +12,28 @@ def memory_data(arg):
     if len(args) > 99:
         insert_file(args)
         args.clear()
-        
+
     global memory_args
     memory_args = args
+
+
+def insert_file(args):
+    with open('bidasks.csv', 'a', newline='') as data:
+        writer = csv.writer(data)
+        writer.writerows(args)
+
+
+def insert_db():
+    data_list = []
+
+    with open('bidasks.csv', 'r', encoding='utf-8') as data:
+        data = csv.reader(data)
+        for row in data:
+            data_list.append(row)
+        BidAskModels.insert_bulk(data_list)
+
+    with open('bidasks.csv', 'w') as data:
+        data.write("")
 
 
 def select_bulk(code, bulk_cnt):
@@ -45,12 +59,6 @@ def select_bulk(code, bulk_cnt):
     return result
 
 
-def insert_file(args):
-    with open('bidasks.csv', 'a', newline='') as data:
-        writer = csv.writer(data)
-        writer.writerows(args)
-
-
 def select_file_bulk(code, count):
     with open('bidasks.csv', 'r', encoding='utf-8') as data:
         data = csv.reader(data)
@@ -59,16 +67,3 @@ def select_file_bulk(code, count):
         result_rows = rows[-count:]
 
         return result_rows
-
-
-def insert_db():
-    data_list = []
-
-    with open('bidasks.csv', 'r', encoding='utf-8') as data:
-        data = csv.reader(data)
-        for row in data:
-            data_list.append(row)
-        BidAskModels.insert_bulk(data_list)
-
-    with open('bidasks.csv', 'w') as data:
-        data.write("")

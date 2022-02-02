@@ -1,4 +1,4 @@
-import pythoncom, threading
+import pythoncom
 from service.util import CodeHandler
 
 
@@ -10,5 +10,5 @@ def start_subscribe(object):
     for i in range(len(codes)):
         objects.append(object)
         objects[i].subscribe(codes[i])
-        
+
     pythoncom.PumpMessages()

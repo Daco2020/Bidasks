@@ -11,7 +11,7 @@ class BidAskModels:
 
         db_class.execute(sql, args)
         db_class.commit()
-        return "Success"
+        return "success"
 
     def insert_bulk(args):
         db_class = Connector()
@@ -22,7 +22,7 @@ class BidAskModels:
 
         db_class.execute_many(sql, args)
         db_class.commit()
-        return "Success"
+        return "success"
 
     def select_one(code):
         db_class = Connector()
